@@ -5,11 +5,7 @@ from .models import AnonyPost, AnonyComment, FreePost, FreeComment
 class PostForm(forms.ModelForm):
     class Meta:
         model = AnonyPost
-        fields = '__all__'
-
-    def form_valid(self, form):
-        form.instance.created_by = self.request.user
-        return super().form_valid(form)
+        fields = ['title', 'body']
     
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)

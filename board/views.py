@@ -37,6 +37,9 @@ def anonypostcreate(request):
     if request.method == 'POST' or request.method == 'FILES':
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
+            unfinished = form.save(commit=False)
+            unfinished.author = request.user  # user 추가!
+            unfinished.save()
             form.save()
             return redirect('anony')
     else:

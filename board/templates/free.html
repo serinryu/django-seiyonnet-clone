@@ -21,7 +21,7 @@
                     <tr>
                         <td><a href="{% url 'freedetail' post.id %}">{{ post.title }}</a></td>
                         <td>{{ post.date }}</td>
-                        <td>{{ post }} </td> <!--작성자-->
+                        <td>{{ post.author.username }} </td> <!--작성자-->
                     </tr>
                     {% endfor %}
                 </tbody>
