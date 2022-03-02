@@ -1,12 +1,16 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    <table>
-        {{form.as_p}}
-    </table>
-    <br/>
-    <input type="submit" class="btn btn-success btn-icon-split btn-sm" value="create">
-</form>
+<div class="card shadow m-3">
+    <div class="card-header py-3">
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+                {{form.as_p}}
+            </table>
+            <br/>
+            <input type="submit" class="btn btn-success" value="create">
+        </form>
+    </div>
+</div>
 {% endblock %}

@@ -7,13 +7,9 @@
 <p>
     {{ post_detail.body }}
 </p>
+<a href="{% url 'anonydetail_delete' post_detail.id %}">삭제</a><br/>
+<a href="{% url 'anonydetail_edit' post_detail.id %}">수정</a>
 <br/><hr/>
-<!-- 댓글 목록 공간 -->
-{% for comment in post_detail.anonycomment_set.all %}
-<span class="badge rounded-pill bg-light">{{ comment.date}}</span>    
-{{ comment }}
-<hr>
-{% endfor %}
 
 <!-- 댓글 입력 공간 -->
 <form method="POST" action="{% url 'newcomment' post_detail.id  %}">
@@ -22,7 +18,15 @@
         {{ comment_form }}
     </div>
     <input type="submit" class="btn btn-primary btn-icon-split btn-sm" value="댓글 입력">
-</form>
+</form><br>
+
+<!-- 댓글 목록 공간 -->
+{% for comment in post_detail.anonycomment_set.all %}
+    <span class="badge rounded-pill bg-light">{{ comment.date }}</span>    
+    {{ comment }}
+    <a href="{% url 'comment_delete' post_detail.id comment.id %}">삭제</a><br/>
+    <hr>
+{% endfor %}
 
 {% endblock %}
 

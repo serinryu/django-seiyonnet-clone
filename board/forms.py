@@ -1,10 +1,15 @@
 from django import forms
 from .models import AnonyPost, AnonyComment, FreePost, FreeComment
 
+#익명게시물 폼
 class PostForm(forms.ModelForm):
     class Meta:
         model = AnonyPost
         fields = '__all__'
+
+    def form_valid(self, form):
+        form.instance.created_by = self.request.user
+        return super().form_valid(form)
     
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
@@ -22,6 +27,7 @@ class PostForm(forms.ModelForm):
             'cols' : 100
         }
 
+#익명댓글 폼
 class CommentForm(forms.ModelForm):
     class Meta:
         model = AnonyComment
@@ -33,9 +39,10 @@ class CommentForm(forms.ModelForm):
         self.fields['comment'].widget.attrs = {
             'class': 'form-control',
             'placeholder': "댓글을 입력해주세요",
-            'rows': 10
+            'rows': 3,
         }
 
+#자유게시물 폼
 class FreePostForm(forms.ModelForm):
     class Meta:
         model = FreePost
@@ -57,7 +64,7 @@ class FreePostForm(forms.ModelForm):
             'cols' : 100
         }
 
-
+#자유댓글 폼
 class FreeCommentForm(forms.ModelForm):
     class Meta:
         model = FreeComment
@@ -69,5 +76,5 @@ class FreeCommentForm(forms.ModelForm):
         self.fields['comment'].widget.attrs = {
             'class': 'form-control',
             'placeholder': "댓글을 입력해주세요",
-            'rows': 10
+            'rows': 3
         }
