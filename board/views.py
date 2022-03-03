@@ -138,10 +138,7 @@ def newfreecomment(request, post_id):
             finished_form.post = get_object_or_404(FreePost, pk=post_id)
             finished_form.author = request.user #댓글 작성자
             finished_form.save()
-            return redirect('freedetail', post_id)
-    else:
-        form = PostForm()
-    return render(request, 'free_post_form.html', {'form':form})
+        return redirect('freedetail', post_id)
 
 def freecomment_delete(request, post_id, comment_id):
     delete_comment = get_object_or_404(FreeComment, pk=comment_id)
