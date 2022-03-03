@@ -10,8 +10,14 @@
 <p>
     {{ post_detail.body }}
 </p>
-<a href="{% url 'anonydetail_delete' post_detail.id %}">삭제</a><br/>
-<a href="{% url 'anonydetail_edit' post_detail.id %}">수정</a>
+
+{% if user.is_authenticated %}
+    {% if user.id == post_detail.author.id %}
+        <a href="{% url 'anonydetail_delete' post_detail.id %}">삭제</a><br/>
+        <a href="{% url 'anonydetail_edit' post_detail.id %}">수정</a>
+    {% endif %}
+{% endif %} 
+
 <br/><hr/>
 
 <!-- 댓글 입력 공간 -->
@@ -27,7 +33,10 @@
 {% for comment in post_detail.anonycomment_set.all %}
     <span class="badge rounded-pill bg-light">{{ comment.date }}</span>    
     {{ comment }}
-    <a href="{% url 'comment_delete' post_detail.id comment.id %}">삭제</a><br/>
+
+    <!-- 익명 댓글 삭제하게끔 하고 싶으면 댓글모델에 author 추가해줘야함
+    <a href="{% url 'comment_delete' post_detail.id comment.id %}">삭제</a><br/> -->
+
     <hr>
 {% endfor %}
 

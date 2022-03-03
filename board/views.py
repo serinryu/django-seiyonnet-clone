@@ -2,7 +2,9 @@ from pdb import post_mortem
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PostForm, CommentForm, FreeCommentForm, FreePostForm
 from .models import AnonyPost,AnonyComment,FreePost,FreeComment
+from django.contrib.auth.models import User
 from django.db.models import Q
+
 
 
 def home(request):
@@ -72,12 +74,13 @@ def anonydetail_delete(request, post_id):
     return redirect('anony')
 
 def newcomment(request, post_id):
-    filled_form = CommentForm(request.POST)
-    if filled_form.is_valid():
-        finished_form = filled_form.save(commit=False)
-        finished_form.post = get_object_or_404(AnonyPost, pk=post_id)
-        finished_form.save()
-    return redirect('anonydetail', post_id)
+    if request.method == 'POST':
+        filled_form = CommentForm(request.POST)
+        if filled_form.is_valid():
+            finished_form = filled_form.save(commit=False)
+            finished_form.post = get_object_or_404(AnonyPost, pk=post_id)
+            finished_form.save()
+        return redirect('anonydetail', post_id)
 
 def comment_delete(request, post_id, comment_id):
     delete_comment = get_object_or_404(AnonyComment, pk=comment_id)
@@ -120,7 +123,7 @@ def freedetail_edit(request, post_id):
             return redirect('free')
     else:
         form = PostForm(instance=post)
-    return render(request, 'anony_post_form.html', {'form':form})
+    return render(request, 'free_post_form.html', {'form':form})
 
 def freedetail_delete(request, post_id):
     delete_post = get_object_or_404(FreePost, pk=post_id)
@@ -128,12 +131,17 @@ def freedetail_delete(request, post_id):
     return redirect('free')
 
 def newfreecomment(request, post_id):
-    filled_form = FreeCommentForm(request.POST)
-    if filled_form.is_valid():
-        finished_form = filled_form.save(commit=False)
-        finished_form.post = get_object_or_404(FreePost, pk=post_id)
-        finished_form.save()
-    return redirect('freedetail', post_id)
+    if request.method == 'POST':
+        filled_form = FreeCommentForm(request.POST)
+        if filled_form.is_valid():
+            finished_form = filled_form.save(commit=False)
+            finished_form.post = get_object_or_404(FreePost, pk=post_id)
+            finished_form.author = request.user #댓글 작성자
+            finished_form.save()
+            return redirect('freedetail', post_id)
+    else:
+        form = PostForm()
+    return render(request, 'free_post_form.html', {'form':form})
 
 def freecomment_delete(request, post_id, comment_id):
     delete_comment = get_object_or_404(FreeComment, pk=comment_id)

@@ -9,8 +9,14 @@
 <p>
     {{ post_detail.body }}
 </p>
-<a href="{% url 'freedetail_delete' post_detail.id %}">삭제</a><br/>
-<a href="{% url 'freedetail_edit' post_detail.id %}">수정</a>
+
+{% if user.is_authenticated %}
+    {% if user.id == post_detail.author.id %}
+        <a href="{% url 'freedetail_delete' post_detail.id %}">삭제</a><br/>
+        <a href="{% url 'freedetail_edit' post_detail.id %}">수정</a>
+    {% endif %}
+{% endif %} 
+
 <br/><hr/>
 
 <!-- 댓글 입력 공간 -->
@@ -23,16 +29,16 @@
 </form><br>
 
 <!-- 댓글 목록 공간 -->
-{% for comment in post_detail.freecomment_set.all %}
+{% for comment in post_detail.freecomment_post.all %} 
     <span class="badge rounded-pill bg-light">{{ comment.date}}</span>    
+    {{ comment.author.username }}
     {{ comment }}
-    {{ comment.post.date }}
-    {{ comment.author }}
+
     {% if user.is_authenticated %}
         {% if user.id == comment.author.id %}
             <a href="{% url 'freecomment_delete' post_detail.id comment.id %}">삭제</a><br/>
         {% endif %}
-    {% endif %}
+    {% endif %} 
     <hr>
 {% endfor %}
 
