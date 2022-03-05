@@ -1,11 +1,8 @@
-from pdb import post_mortem
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PostForm, CommentForm, FreeCommentForm, FreePostForm
 from .models import AnonyPost,AnonyComment,FreePost,FreeComment
 from django.contrib.auth.models import User
 from django.db.models import Q
-
-
 
 def home(request):
     return render(request, 'index.html')
@@ -14,17 +11,16 @@ def search(request):
     if request.method == 'GET':
         search = request.GET.get('keyword')
         if search:
-            posts = AnonyPost.objects.filter(
+            posts1 = AnonyPost.objects.filter(
             Q(title__icontains = search) | #제목
             Q(body__icontains = search) #내용
             )      
-            #더하기 기능 annotate 이용하기
             posts2 = FreePost.objects.filter(
             Q(title__icontains = search) | #제목
             Q(body__icontains = search) #내용
             )      
-                
-            return render(request, 'anony.html', {'posts':posts})
+            posts = posts1.union(posts2) #검색 결과  합치기 
+            return render(request, 'search.html', {'posts':posts})
     return render(request, 'index.html')
 
 ###
@@ -79,6 +75,7 @@ def newcomment(request, post_id):
         if filled_form.is_valid():
             finished_form = filled_form.save(commit=False)
             finished_form.post = get_object_or_404(AnonyPost, pk=post_id)
+            finished_form.author = request.user #댓글 작성자
             finished_form.save()
         return redirect('anonydetail', post_id)
 

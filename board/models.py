@@ -7,6 +7,7 @@ class AnonyPost(models.Model):
     body = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, null=True, default='', on_delete=models.CASCADE)
+    anony = models.BooleanField(default=True)
 
     def __str__(self):
         return self.title
@@ -15,6 +16,7 @@ class AnonyComment(models.Model):
     comment = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     post = models.ForeignKey(AnonyPost, null=True, blank=True, on_delete=models.CASCADE)
+    author =  models.ForeignKey(User, null=True, blank=True,on_delete=models.CASCADE) 
 
     def __str__(self):
         return self.comment
@@ -24,6 +26,7 @@ class FreePost(models.Model):
     body = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     author =  models.ForeignKey(User, on_delete=models.CASCADE) 
+    anony = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

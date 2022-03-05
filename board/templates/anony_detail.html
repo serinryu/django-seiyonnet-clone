@@ -34,8 +34,11 @@
     <span class="badge rounded-pill bg-light">{{ comment.date }}</span>    
     {{ comment }}
 
-    <!-- 익명 댓글 삭제하게끔 하고 싶으면 댓글모델에 author 추가해줘야함
-    <a href="{% url 'comment_delete' post_detail.id comment.id %}">삭제</a><br/> -->
+    {% if user.is_authenticated %}
+        {% if user.id == comment.author.id %}
+        <a href="{% url 'comment_delete' post_detail.id comment.id %}">삭제</a><br/>
+        {% endif %}
+    {% endif %} 
 
     <hr>
 {% endfor %}

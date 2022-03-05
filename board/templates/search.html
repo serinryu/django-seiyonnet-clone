@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block content %}
+<!-- Page Heading -->
+<!-- DataTales Example -->
+<div class="card shadow m-3">
+    <div class="card-header py-3">
+        <h6 class="m-3 font-weight-bold text-success">자유게시판</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th width='70%'>글 제목</th>
+                        <th>작성 날짜</th>
+                        <th>작성자</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for post in posts %}
+                    {% if post.anony %}
+                    <tr>
+                        <td><a href="{% url 'anonydetail' post.id %}">{{ post.title }}</a></td>
+                        <td>{{ post.date }}</td>
+                        <td>익명</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td><a href="{% url 'freedetail' post.id %}">{{ post.title }}</a></td>
+                        <td>{{ post.date }}</td>
+                        <td>{{ post.author.username }} </td> <!--작성자-->
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
