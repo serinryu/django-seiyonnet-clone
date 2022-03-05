@@ -3,6 +3,7 @@ from .forms import PostForm, CommentForm, FreeCommentForm, FreePostForm
 from .models import AnonyPost,AnonyComment,FreePost,FreeComment
 from django.contrib.auth.models import User
 from django.db.models import Q
+from django.core.paginator import Paginator
 
 def home(request):
     return render(request, 'index.html')
@@ -29,6 +30,9 @@ def search(request):
 
 def anony(request):
     posts = AnonyPost.objects.filter().order_by('-date')
+    paginator = Paginator(posts, 5)
+    pagnum = request.GET.get('page')
+    posts = paginator.get_page(pagnum)
     return render(request, 'anony.html', {'posts':posts})
 
 def anonypostcreate(request):
@@ -91,6 +95,9 @@ def comment_delete(request, post_id, comment_id):
 
 def free(request):
     posts = FreePost.objects.filter().order_by('-date')
+    paginator = Paginator(posts, 5)
+    pagnum = request.GET.get('page')
+    posts = paginator.get_page(pagnum)
     return render(request, 'free.html', {'posts':posts})
 
 def freepostcreate(request):

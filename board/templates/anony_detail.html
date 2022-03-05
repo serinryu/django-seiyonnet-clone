@@ -1,47 +1,56 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2 class="alert alert-primary"> {{ post_detail.title }}</h2>
-<span class="badge rounded-pill bg-light">{{ post_detail.date}}</span>
-<br/>
-<!-- <span class="badge rounded-pill bg-light">{{ post_detail.author.username}}</span> -->
-<span class="badge rounded-pill bg-light">익명</span>
-<hr/>
-<p>
-    {{ post_detail.body }}
-</p>
+    <div class="card shadow p-5 m-3">
+    <h1 class="m-2 mb-4"> {{ post_detail.title }}</h1>
+    <small class="text">{{ post_detail.date}}</small>
 
-{% if user.is_authenticated %}
-    {% if user.id == post_detail.author.id %}
-        <a href="{% url 'anonydetail_delete' post_detail.id %}">삭제</a><br/>
-        <a href="{% url 'anonydetail_edit' post_detail.id %}">수정</a>
-    {% endif %}
-{% endif %} 
-
-<br/><hr/>
-
-<!-- 댓글 입력 공간 -->
-<form method="POST" action="{% url 'newcomment' post_detail.id  %}">
-    {% csrf_token %}
-    <div class="form-group">
-        {{ comment_form }}
-    </div>
-    <input type="submit" class="btn btn-primary btn-icon-split btn-sm" value="댓글 입력">
-</form><br>
-
-<!-- 댓글 목록 공간 -->
-{% for comment in post_detail.anonycomment_set.all %}
-    <span class="badge rounded-pill bg-light">{{ comment.date }}</span>    
-    {{ comment }}
+    <small class="text">익명</small>
+    
+    <hr/>
+    <p class="alert">
+        {{ post_detail.body }}
+    </p>
 
     {% if user.is_authenticated %}
-        {% if user.id == comment.author.id %}
-        <a href="{% url 'comment_delete' post_detail.id comment.id %}">삭제</a><br/>
+        {% if user.id == post_detail.author.id %}
+            <div class="mt-5">
+                <button class="btn btn-outline-primary btn-sm"><a href="{% url 'anonydetail_delete' post_detail.id %}">삭제</a><br/></button>
+                <button class="btn btn-outline-primary btn-sm"><a href="{% url 'anonydetail_edit' post_detail.id %}">수정</a></button>
+            </div>
         {% endif %}
     {% endif %} 
 
+    <br/><hr/>
+
+    <!-- 댓글 입력 공간 -->
+    <form method="POST" action="{% url 'newcomment' post_detail.id  %}">
+        {% csrf_token %}
+        <div class="d-flex"> 
+            <div class="form-group"> {{ comment_form }} </div>
+            <input type="submit" class="btn btn-primary btn-sm m-4" value="댓글 입력"/>
+        </div>
+    </form><br>
+
+    <!-- 댓글 목록 공간 -->
+    {% for comment in post_detail.anonycomment_set.all %}
+        <div class="d-flex justify-content-between">
+            <div>
+                <small class="text fw-light mr-3">{{ comment.date }}</small>    
+                <span class="fw-bold">{{ comment }}</span>
+            </div>
+
+            {% if user.is_authenticated %}
+                {% if user.id == comment.author.id %}
+                    <a href="{% url 'comment_delete' post_detail.id comment.id %}">❌</a>
+                {% endif %}
+            {% endif %} 
+        </div>
+
     <hr>
-{% endfor %}
+    {% endfor %}
+
+</div>
 
 {% endblock %}
 

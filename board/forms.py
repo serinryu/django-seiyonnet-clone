@@ -36,6 +36,7 @@ class CommentForm(forms.ModelForm):
             'class': 'form-control',
             'placeholder': "댓글을 입력해주세요",
             'rows': 3,
+            'cols': 150
         }
 
 #자유게시물 폼
@@ -72,5 +73,6 @@ class FreeCommentForm(forms.ModelForm):
         self.fields['comment'].widget.attrs = {
             'class': 'form-control',
             'placeholder': "댓글을 입력해주세요",
-            'rows': 3
+            'rows': 3,
+            'cols': 150
         }
