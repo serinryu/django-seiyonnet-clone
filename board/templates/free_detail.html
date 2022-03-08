@@ -20,7 +20,11 @@
         {% endif %}
     {% endif %} 
 
-    <br/><hr/>
+    <div class="mt-4">
+      <a href="{% url 'free_like' post_detail.id %}"><button type="button" class="btn btn-primary">
+      좋아요 {{post_detail.like_count}} 개
+      </button></a>
+    </div><hr/>
 
     <!-- 댓글 입력 공간 -->
     <form method="POST" action="{% url 'newfreecomment' post_detail.id  %}">

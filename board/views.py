@@ -28,6 +28,7 @@ def search(request):
 def profile(request, user_id):
     userprofile = get_object_or_404(Profile, pk=user_id)
     return render(request, 'profile.html', {'userprofile':userprofile})
+    
 
 ###
 # 익명게시판
@@ -89,6 +90,20 @@ def comment_delete(request, post_id, comment_id):
     delete_comment.delete()
     return redirect('anonydetail', post_id)
 
+def anony_like(request, post_id):
+    post = get_object_or_404(AnonyPost, id=post_id)
+    user = request.user
+    profile = Profile.objects.get(id=user.id)
+    check_like_post = profile.like_anonyposts.filter(id=post_id)
+    if check_like_post.exists():
+        profile.like_anonyposts.remove(post)
+        post.like_count -= 1
+        post.save()
+    else:
+        profile.like_anonyposts.add(post)
+        post.like_count += 1
+        post.save()
+    return redirect('anonydetail', post_id)
 
 ###
 # 자유게시판
@@ -120,7 +135,6 @@ def freedetail(request, post_id):
 
 def freedetail_edit(request, post_id):
     post = get_object_or_404(FreePost, pk=post_id)
-    # 폼을 불러올 때 입력했던 내용을 포함시켜서 불러오려면 폼에 instance=order를 넣어준다.
     if request.method == 'POST' or request.method == 'FILES':
         form = PostForm(request.POST, request.FILES,instance=post)
         if form.is_valid():
@@ -148,4 +162,19 @@ def newfreecomment(request, post_id):
 def freecomment_delete(request, post_id, comment_id):
     delete_comment = get_object_or_404(FreeComment, pk=comment_id)
     delete_comment.delete()
+    return redirect('freedetail', post_id)
+
+def free_like(request, post_id):
+    post = get_object_or_404(FreePost, id=post_id)
+    user = request.user
+    profile = Profile.objects.get(id=user.id)
+    check_like_post = profile.like_freeposts.filter(id=post_id)
+    if check_like_post.exists():
+        profile.like_freeposts.remove(post)
+        post.like_count -= 1
+        post.save()
+    else:
+        profile.like_freeposts.add(post)
+        post.like_count += 1
+        post.save()
     return redirect('freedetail', post_id)

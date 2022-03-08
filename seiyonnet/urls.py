@@ -27,6 +27,9 @@ urlpatterns = [
     path('new_freecomment/<int:post_id>', views.newfreecomment, name='newfreecomment'),
     path('new_freecomment/<int:post_id>/delete/<int:comment_id>', views.freecomment_delete, name='freecomment_delete'),
 
+    path('anony_like/<int:post_id>', views.anony_like, name='anony_like'),
+    path('free_like/<int:post_id>', views.free_like, name='free_like'),
+
     path('login/', accounts_views.login, name='login'),    
     path('logout/', accounts_views.logout, name='logout'),
     path('signup/', accounts_views.signup, name='signup'),
