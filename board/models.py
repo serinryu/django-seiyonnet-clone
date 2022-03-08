@@ -18,6 +18,9 @@ class AnonyComment(models.Model):
     post = models.ForeignKey(AnonyPost, null=True, blank=True, on_delete=models.CASCADE)
     author =  models.ForeignKey(User, null=True, blank=True,on_delete=models.CASCADE) 
 
+    class Meta:
+      ordering = ['-date'] #댓글 최신순
+
     def __str__(self):
         return self.comment
 

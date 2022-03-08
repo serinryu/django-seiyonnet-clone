@@ -31,7 +31,7 @@
         </div>
     </form><br>
 
-    <!-- 댓글 목록 공간 -->
+    <!-- 댓글 목록 공간 --> <!--related_name있으므로 set이 아니라 related_name인 freecomment_post 으로 접근-->
     {% for comment in post_detail.freecomment_post.all %}
         <div class="d-flex justify-content-between">
             <div>
