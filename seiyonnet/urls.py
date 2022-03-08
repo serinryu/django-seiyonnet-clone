@@ -9,7 +9,7 @@ urlpatterns = [
     path('', views.home, name='home'),
 
     path('search/', views.search, name='search'),
-    # path('profile/<int:user_id>', views.profile, name='profile'),
+    path('profile/<int:user_id>', views.profile, name='profile'),
 
     path('anony/', views.anony, name='anony'),
     path('anony_postcreate/', views.anonypostcreate, name='anonypostcreate'),
@@ -26,7 +26,6 @@ urlpatterns = [
     path('free_detail/<int:post_id>/delete', views.freedetail_delete, name='freedetail_delete'),
     path('new_freecomment/<int:post_id>', views.newfreecomment, name='newfreecomment'),
     path('new_freecomment/<int:post_id>/delete/<int:comment_id>', views.freecomment_delete, name='freecomment_delete'),
-
 
     path('login/', accounts_views.login, name='login'),    
     path('logout/', accounts_views.logout, name='logout'),

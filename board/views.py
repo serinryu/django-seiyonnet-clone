@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import PostForm, CommentForm, FreeCommentForm, FreePostForm
-from .models import AnonyPost,AnonyComment,FreePost,FreeComment
+from .models import Profile,AnonyPost,AnonyComment,FreePost,FreeComment
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.core.paginator import Paginator
@@ -24,6 +24,10 @@ def search(request):
             posts = posts1.union(posts2) #검색 결과  합치기 
             return render(request, 'search.html', {'posts':posts})
     return render(request, 'index.html')
+
+def profile(request, user_id):
+    userprofile = get_object_or_404(Profile, pk=user_id)
+    return render(request, 'profile.html', {'userprofile':userprofile})
 
 ###
 # 익명게시판

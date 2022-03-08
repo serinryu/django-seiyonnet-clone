@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import auth #데이터베이스에 이미 있는지 확인하는 authenticate()메소드 사용가능
 from django.contrib.auth.models import User
 from django.contrib import messages
-
+from board.models import Profile
 
 def login(request):
 	#POST 요청이 들어오면 로그인 처리
@@ -29,6 +29,11 @@ def signup(request):
             # 회원가입
             new_user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'],
             email=request.POST['email'])
+
+            profile = Profile()
+            profile.user=new_user
+            profile.save()
+
             # 로그인
             auth.login(request, new_user)
             # 홈 리다이렉션

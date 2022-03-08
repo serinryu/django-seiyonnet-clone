@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="h-50 shadow m-5">
+  <div class="p-5 text-center">
+      <div class="text-lg">{{userprofile.user.username}} 님의 프로필
+      </div>
+      <div>{{userprofile.user.email}}</div>
+</div>
+</div>
+
+{% endblock %}
