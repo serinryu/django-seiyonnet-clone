@@ -51,15 +51,6 @@ def anonypostcreate(request):
 
 def anonydetail(request, post_id):
     post_detail = get_object_or_404(AnonyPost, pk=post_id)
-
-    # post_detail = post_detail.annotate(order_comment=Max('anonycomment__date')).order_by('-order_comment')
-
-    #post_detail = AnonyPost.objects.get(pk=post_id).order_by('-anonycomment__date')
-
-    #post_detail = AnonyPost.objects.filter(pk=post_id).order_by('-anonycomment__date')
-
-    #위 코드는 에러가 나는 게 맞다. 생각해보자. 우리는 pk=post_id 값인 post 를 제대로 넘겨줘야 한다. 만약 뒤에서 order_by 를 작성하게 되면 댓글생성시기에 따라서 "post"의 순서를 바꾸라는 의미다. 따라서 '엥? 내가 받아야 하는 것은 pk=post_id 인 post 하나인데 왜 순서 바꾸라고 하지?' 하고 에러가 뜨는 것! 즉, 우리는 post 안의 "댓글"순서를 바꿔주고 싶은 것이므로 models.py 의 anonycomment 에 애초에 처음부터 ordering 을 설정해주면, 확실하게 "댓글"의 순서를 바꿔줄 수 있겠다.
-    
     comment_form = CommentForm()
     return render(request, 'anony_detail.html', {'post_detail':post_detail, 'comment_form': comment_form})
 

@@ -24,8 +24,17 @@
 </head>
 
 <body class="bg-gradient-primary">
-
     <div class="container">
+
+      {% if messages %}
+        {% for message in messages %}
+        <div class="text-center"> 
+          <div class="rounded-pill px-5 my-3"> 
+            {{ message.message }} 
+          </div> 
+        </div> 
+        {% endfor %}
+      {% endif %}
 
         <!-- Outer Row -->
         <div class="row justify-content-center">

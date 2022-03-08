@@ -23,10 +23,18 @@
 
 </head>
 
-
 <body class="bg-gradient-primary">
-
     <div class="container">
+
+      {% if messages %}
+        {% for message in messages %}
+        <div class="text-center"> 
+          <div class="rounded-pill px-5 my-3"> 
+            {{ message.message }} 
+          </div> 
+        </div> 
+        {% endfor %}
+      {% endif %}
 
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="card-body p-0">
