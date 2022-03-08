@@ -30,9 +30,9 @@ urlpatterns = [
     path('anony_like/<int:post_id>', views.anony_like, name='anony_like'),
     path('free_like/<int:post_id>', views.free_like, name='free_like'),
 
-    path('login/', accounts_views.login, name='login'),    
-    path('logout/', accounts_views.logout, name='logout'),
-    path('signup/', accounts_views.signup, name='signup'),
+    path('accounts/login/', accounts_views.login, name='login'),    
+    path('accounts/logout/', accounts_views.logout, name='logout'),
+    path('accounts/signup/', accounts_views.signup, name='signup'),
 
     #path('accounts/', include('allauth.urls')),
 

@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.core.paginator import Paginator
 from django.db.models import Max
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     return render(request, 'index.html')
@@ -59,6 +60,7 @@ def anonydetail(request, post_id):
     comment_form = CommentForm()
     return render(request, 'anony_detail.html', {'post_detail':post_detail, 'comment_form': comment_form})
 
+@login_required
 def anonydetail_edit(request, post_id):
     post = get_object_or_404(AnonyPost, pk=post_id)
     if request.method == 'POST' or request.method == 'FILES':
@@ -70,11 +72,13 @@ def anonydetail_edit(request, post_id):
         form = PostForm(instance=post)
     return render(request, 'anony_post_form.html', {'form':form})
 
+@login_required
 def anonydetail_delete(request, post_id):
     delete_post = get_object_or_404(AnonyPost, pk=post_id)
     delete_post.delete()
     return redirect('anony')
 
+@login_required
 def newcomment(request, post_id):
     if request.method == 'POST':
         filled_form = CommentForm(request.POST)
@@ -85,11 +89,13 @@ def newcomment(request, post_id):
             finished_form.save()
         return redirect('anonydetail', post_id)
 
+@login_required
 def comment_delete(request, post_id, comment_id):
     delete_comment = get_object_or_404(AnonyComment, pk=comment_id)
     delete_comment.delete()
     return redirect('anonydetail', post_id)
 
+@login_required
 def anony_like(request, post_id):
     post = get_object_or_404(AnonyPost, id=post_id)
     user = request.user
@@ -116,6 +122,7 @@ def free(request):
     posts = paginator.get_page(pagnum)
     return render(request, 'free.html', {'posts':posts})
 
+@login_required
 def freepostcreate(request):
     if request.method == 'POST' or request.method == 'FILES':
         form = FreePostForm(request.POST, request.FILES)
@@ -133,6 +140,7 @@ def freedetail(request, post_id):
     comment_form = FreeCommentForm()
     return render(request, 'free_detail.html', {'post_detail':post_detail, 'comment_form': comment_form})
 
+@login_required
 def freedetail_edit(request, post_id):
     post = get_object_or_404(FreePost, pk=post_id)
     if request.method == 'POST' or request.method == 'FILES':
@@ -144,11 +152,13 @@ def freedetail_edit(request, post_id):
         form = PostForm(instance=post)
     return render(request, 'free_post_form.html', {'form':form})
 
+@login_required
 def freedetail_delete(request, post_id):
     delete_post = get_object_or_404(FreePost, pk=post_id)
     delete_post.delete()
     return redirect('free')
 
+@login_required
 def newfreecomment(request, post_id):
     if request.method == 'POST':
         filled_form = FreeCommentForm(request.POST)
@@ -159,11 +169,13 @@ def newfreecomment(request, post_id):
             finished_form.save()
         return redirect('freedetail', post_id)
 
+@login_required
 def freecomment_delete(request, post_id, comment_id):
     delete_comment = get_object_or_404(FreeComment, pk=comment_id)
     delete_comment.delete()
     return redirect('freedetail', post_id)
 
+@login_required
 def free_like(request, post_id):
     post = get_object_or_404(FreePost, id=post_id)
     user = request.user
