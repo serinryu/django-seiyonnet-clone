@@ -22,15 +22,15 @@
     {% endif %} 
 
     <div class="mt-4">
-      <a href="{% url 'anony_like' post_detail.id %}"><button type="button" class="btn btn-primary">
-        {% if user_likes %}
+      <a href="{% url 'anony_like' post_detail.id %}"><button type="button" class="btn btn-outline-light">
+        {% if post_detail in user.profile.like_anonyposts.all %}
           <i class="fas fa-heart" style="color:red; font-size: 17px;"></i>
         {% else %}
           <i class="far fa-heart" style="color:red; font-size: 17px;"></i>
         {% endif %}
       </button></a>
       <span class="small">
-        {% if user.profile.like_anonypost %}
+        {% if post_detail in user.profile.like_anonyposts.all %}
           {{ user }} 님 외 {{ post_detail.like_count }}명이 이 게시물을 좋아합니다
         {% else %}
           {{ post_detail.like_count }}명이 이 게시물을 좋아합니다

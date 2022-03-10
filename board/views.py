@@ -99,8 +99,8 @@ def comment_delete(request, post_id, comment_id):
 @login_required
 def anony_like(request, post_id):
     post = get_object_or_404(AnonyPost, id=post_id)
-    user = request.user
-    profile = Profile.objects.get(id=user.id)
+    user = get_object_or_404(User, username=request.user.username) 
+    profile = Profile.objects.get(user_id=user.id)
     check_like_post = profile.like_anonyposts.filter(id=post_id)
     if check_like_post.exists():
         profile.like_anonyposts.remove(post)
@@ -179,8 +179,8 @@ def freecomment_delete(request, post_id, comment_id):
 @login_required
 def free_like(request, post_id):
     post = get_object_or_404(FreePost, id=post_id)
-    user = request.user
-    profile = Profile.objects.get(id=user.id)
+    user = get_object_or_404(User, username=request.user.username) 
+    profile = Profile.objects.get(user_id=user.id)
     check_like_post = profile.like_freeposts.filter(id=post_id)
     if check_like_post.exists():
         profile.like_freeposts.remove(post)
