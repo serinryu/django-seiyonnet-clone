@@ -8,7 +8,7 @@ class Profile(models.Model):
     like_freeposts = models.ManyToManyField('FreePost', blank=True, related_name='like_freeposts')
 
     def __str__(self):
-        return self.username
+        return self.user.username
 
 class AnonyPost(models.Model):
     title = models.CharField(max_length=200)

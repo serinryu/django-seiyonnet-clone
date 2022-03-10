@@ -9,7 +9,7 @@ urlpatterns = [
     path('', views.home, name='home'),
 
     path('search/', views.search, name='search'),
-    path('profile/<int:user_id>', views.profile, name='profile'),
+    path('profile/<str:user_username>', views.profile, name='profile'),
 
     path('anony/', views.anony, name='anony'),
     path('anony_postcreate/', views.anonypostcreate, name='anonypostcreate'),

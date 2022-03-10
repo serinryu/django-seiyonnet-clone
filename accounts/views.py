@@ -27,8 +27,10 @@ def signup(request):
           return render(request, 'register.html')
         if request.POST['password'] == request.POST['password2']:
             # 회원가입
-            new_user = User.objects.create_user(username=request.POST['username'], password=request.POST['password'],
-            email=request.POST['email'])
+            new_user = User.objects.create_user(
+              username=request.POST['username'], 
+              password=request.POST['password'],
+              email=request.POST['email'])
 
             profile = Profile()
             profile.user=new_user

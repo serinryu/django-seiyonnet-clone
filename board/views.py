@@ -26,8 +26,9 @@ def search(request):
             return render(request, 'search.html', {'posts':posts})
     return render(request, 'index.html')
 
-def profile(request, user_id):
-    userprofile = get_object_or_404(Profile, pk=user_id)
+def profile(request, user_username):
+    user = get_object_or_404(User, username=user_username) 
+    userprofile = get_object_or_404(Profile, user_id = user.id) #user id로 프로필 찾기 
     return render(request, 'profile.html', {'userprofile':userprofile})
     
 
