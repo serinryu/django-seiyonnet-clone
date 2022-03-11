@@ -29,7 +29,9 @@ def search(request):
 def profile(request, user_username):
     user = get_object_or_404(User, username=user_username) 
     userprofile = get_object_or_404(Profile, user_id = user.id) #user id로 프로필 찾기 
-    return render(request, 'profile.html', {'userprofile':userprofile})
+    my_anony_posts = AnonyPost.objects.filter(author=user)
+    my_free_posts = FreePost.objects.filter(author=user)
+    return render(request, 'profile.html', {'userprofile':userprofile, 'my_anony_posts':my_anony_posts, 'my_free_posts':my_free_posts})
     
 
 ###
