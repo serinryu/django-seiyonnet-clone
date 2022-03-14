@@ -2,6 +2,8 @@ from django.db import models
 from django.conf import settings 
 from django.contrib.auth.models import User
 
+#프로필 
+
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     like_anonyposts = models.ManyToManyField('AnonyPost', blank=True, related_name='like_anonyposts')
@@ -9,6 +11,8 @@ class Profile(models.Model):
 
     def __str__(self):
         return self.user.username
+
+#익명게시판
 
 class AnonyPost(models.Model):
     title = models.CharField(max_length=200)
@@ -33,6 +37,8 @@ class AnonyComment(models.Model):
 
     def __str__(self):
         return self.comment
+
+#자유게시판
 
 class FreePost(models.Model):
     title = models.CharField(max_length=200)

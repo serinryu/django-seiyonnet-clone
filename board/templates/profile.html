@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
 <div class="shadow m-5">
   <div class="p-5 text-center">
+      <img class="img-profile rounded-circle shadow animated--grow-in m-5" width="100" src="{% static 'img/undraw_profile.svg' %}"/>
       <div class="text-lg">{{userprofile.user.username}} 님의 프로필
       </div>
       <div>{{userprofile.user.email}}</div>
-      <div class="d-flex justify-content-center">
+      <div>
         <div class="card shadow m-5 p-4"> 내가 쓴 익명게시글 <hr>
         {% for mypost in my_anony_posts.all %}
           <a href="{%url 'anonydetail' mypost.id%}" class="m-2">{{mypost}}</a>
