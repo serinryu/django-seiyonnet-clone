@@ -12,6 +12,7 @@ urlpatterns = [
 
     path('search/', views.search, name='search'),
     path('profile/<str:user_username>', views.profile, name='profile'),
+    path('profile/<str:user_username>/edit', views.profileedit, name='profileedit'),
 
     path('anony/', views.anony, name='anony'),
     path('anony_postcreate/', views.anonypostcreate, name='anonypostcreate'),

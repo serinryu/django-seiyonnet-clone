@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<h1 class="m-5">프로필 수정하기</h1>
+<div class="card text-center m-5">
+    <div class="card-header" width="100px">
+
+      {% if userprofile.image %}
+        <img class="img-profile rounded-circle shadow animated--grow-in m-5" width="100" src="{{ userprofile.image.url }}"/>
+      {% else %}
+        <img class="img-profile rounded-circle shadow animated--grow-in m-5" width="100" src="{% static 'img/undraw_profile.svg' %}"/>
+      {% endif %}
+
+        <form action="" method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <table>
+                {{form.as_p}}
+            </table>
+            <br/>
+            <input type="submit" class="btn btn-success mb-4" value="create">
+        </form>
+    </div>
+</div>
+{% endblock %}

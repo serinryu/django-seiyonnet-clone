@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='profile/', blank=True, null=True)
     like_anonyposts = models.ManyToManyField('AnonyPost', blank=True, related_name='like_anonyposts')
     like_freeposts = models.ManyToManyField('FreePost', blank=True, related_name='like_freeposts')
 

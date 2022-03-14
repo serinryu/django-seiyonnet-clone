@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import PostForm, CommentForm, FreeCommentForm, FreePostForm
+from .forms import PostForm, CommentForm, FreeCommentForm, FreePostForm,ProfileForm
 from .models import Profile,AnonyPost,AnonyComment,FreePost,FreeComment
 from django.contrib.auth.models import User
 from django.db.models import Q
@@ -33,6 +33,18 @@ def profile(request, user_username):
     my_free_posts = FreePost.objects.filter(author=user)
     return render(request, 'profile.html', {'userprofile':userprofile, 'my_anony_posts':my_anony_posts, 'my_free_posts':my_free_posts})
     
+@login_required
+def profileedit(request, user_username):
+    user = get_object_or_404(User, username=user_username) 
+    userprofile = get_object_or_404(Profile, user_id = user.id) #user id로 프로필 찾기 
+    if request.method == 'POST' or request.method == 'FILES':
+        form = ProfileForm(request.POST, request.FILES, instance=userprofile)
+        if form.is_valid():
+            form.save()
+            return redirect('profile', user_username)
+    else:
+        form = ProfileForm(instance=userprofile)
+    return render(request, 'profile_edit_form.html', {'form':form, 'userprofile':userprofile})
 
 ###
 # 익명게시판

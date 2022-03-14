@@ -189,7 +189,13 @@
                                 {% else %}
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">로그인</span>
                                 {% endif %}
-                                <img class="img-profile rounded-circle" src="{% static 'img/undraw_profile.svg' %}">
+
+                                {% if user.profile.image %}
+                                <img class="img-profile rounded-circle shadow animated--grow-in" width="100" src="{{ user.profile.image.url }}"/>
+                                {% else %}
+                                <img class="img-profile rounded-circle shadow animated--grow-in" width="100" src="{% static 'img/undraw_profile.svg' %}"/>
+                                {% endif %}
+
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"

@@ -1,5 +1,10 @@
 from django import forms
-from .models import AnonyPost, AnonyComment, FreePost, FreeComment
+from .models import Profile, AnonyPost, AnonyComment, FreePost, FreeComment
+
+class ProfileForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ['image']
 
 #익명게시물 폼
 class PostForm(forms.ModelForm):

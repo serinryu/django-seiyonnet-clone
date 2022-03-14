@@ -4,10 +4,23 @@
 {% block content %}
 <div class="shadow m-5">
   <div class="p-5 text-center">
-      <img class="img-profile rounded-circle shadow animated--grow-in m-5" width="100" src="{% static 'img/undraw_profile.svg' %}"/>
+
+      {% if userprofile.image %}
+        <img class="img-profile rounded-circle shadow animated--grow-in m-5" width="100" src="{{ userprofile.image.url }}"/>
+      {% else %}
+        <img class="img-profile rounded-circle shadow animated--grow-in m-5" width="100" src="{% static 'img/undraw_profile.svg' %}"/>
+      {% endif %}
+
       <div class="text-lg">{{userprofile.user.username}} 님의 프로필
       </div>
-      <div>{{userprofile.user.email}}</div>
+      <div>{{userprofile.user.email}}</div><br>
+
+      {% if user.is_authenticated %}
+        {% if user.id == userprofile.user.id %}
+          <div><a href="{%url 'profileedit' user.username%}">프로필 수정하기&RightArrow;</a></div>
+        {% endif %}
+      {% endif %}
+
       <div>
         <div class="card shadow m-5 p-4"> 내가 쓴 익명게시글 <hr>
         {% for mypost in my_anony_posts.all %}
