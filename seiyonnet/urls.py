@@ -37,6 +37,6 @@ urlpatterns = [
     path('accounts/logout/', accounts_views.logout, name='logout'),
     path('accounts/signup/', accounts_views.signup, name='signup'),
 
-    #path('accounts/', include('allauth.urls')),
+    path('accounts/', include('allauth.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
