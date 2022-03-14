@@ -5,7 +5,7 @@ from .models import AnonyPost, AnonyComment, FreePost, FreeComment
 class PostForm(forms.ModelForm):
     class Meta:
         model = AnonyPost
-        fields = ['title', 'body']
+        fields = ['title', 'body', 'image']
     
     def __init__(self, *args, **kwargs):
         super(PostForm, self).__init__(*args, **kwargs)
@@ -43,7 +43,7 @@ class CommentForm(forms.ModelForm):
 class FreePostForm(forms.ModelForm):
     class Meta:
         model = FreePost
-        fields = ['title', 'body']
+        fields = ['title', 'body', 'image']
 
     def __init__(self, *args, **kwargs):
         super(FreePostForm, self).__init__(*args, **kwargs)

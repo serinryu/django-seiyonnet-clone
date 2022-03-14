@@ -13,6 +13,7 @@ class Profile(models.Model):
 class AnonyPost(models.Model):
     title = models.CharField(max_length=200)
     body = models.TextField()
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(User, null=True, default='', on_delete=models.CASCADE)
     anony = models.BooleanField(default=True)
@@ -36,6 +37,7 @@ class AnonyComment(models.Model):
 class FreePost(models.Model):
     title = models.CharField(max_length=200)
     body = models.TextField()
+    image = models.ImageField(upload_to='images/', blank=True, null=True)
     date = models.DateTimeField(auto_now_add=True)
     author =  models.ForeignKey(User, on_delete=models.CASCADE) 
     anony = models.BooleanField(default=False)
