@@ -22,7 +22,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG', default=True, cast=bool)
 
-ALLOWED_HOSTS = [ '*' ]
+ALLOWED_HOSTS = [ 'https://seiyonnet.herokuapp.com/', '127.0.0.1' ]
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
