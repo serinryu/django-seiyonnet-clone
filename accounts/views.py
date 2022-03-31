@@ -37,7 +37,7 @@ def signup(request):
             profile.save()
 
             # 로그인
-            auth.login(request, new_user)
+            auth.login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
             # 홈 리다이렉션
             return redirect('home')
     return render(request, 'register.html')
