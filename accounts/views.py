@@ -22,24 +22,27 @@ def login(request):
 
 def signup(request):
     if request.method == "POST":
+        if request.POST['username'] == "" or request.POST['password'] == "" or request.POST['password2'] == "" or request.POST['email']== "":
+          messages.add_message(request, messages.INFO, '정보를 입력해주세요')
+          return render(request, 'register.html')
         if User.objects.filter(username=request.POST['username']).exists():
           messages.add_message(request, messages.INFO, '이미 같은 username 을 가진 사용자가 있습니다. 다른 username으로 회원가입해주세요!')
           return render(request, 'register.html')
         if request.POST['password'] == request.POST['password2']:
-            # 회원가입
-            new_user = User.objects.create_user(
-              username=request.POST['username'], 
-              password=request.POST['password'],
-              email=request.POST['email'])
+          # 회원가입
+          new_user = User.objects.create_user(
+            username=request.POST['username'], 
+            password=request.POST['password'],
+            email=request.POST['email'])
 
-            profile = Profile()
-            profile.user=new_user
-            profile.save()
+          profile = Profile()
+          profile.user=new_user
+          profile.save()
 
-            # 로그인
-            auth.login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
-            # 홈 리다이렉션
-            return redirect('home')
+          # 로그인
+          auth.login(request, new_user, backend='django.contrib.auth.backends.ModelBackend')
+          # 홈 리다이렉션
+          return redirect('home')
     return render(request, 'register.html')
 
 def logout(request):
